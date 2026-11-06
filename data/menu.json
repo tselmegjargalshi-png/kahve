@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "updatedAt": "2026-11-06T00:00:00.000Z",
+  "brand": {
+    "name": "Galata Kahve",
+    "sub": "Kahve Dükkanı",
+    "since": "1924",
+    "tagline": {
+      "mn": "Галатын цамхгийн сүүдэрт, нэг аяга халуун дурсамж",
+      "tr": "Galata Kulesi'nin gölgesinde, bir fincan sıcak hatıra"
+    },
+    "proverb": {
+      "tr": "Bir fincan kahvenin kırk yıl hatırı vardır.",
+      "mn": "Нэг аяга кофены дурсамж дөчин жил үлддэг."
+    },
+    "story": {
+      "mn": "Бид Турк кофег зэс жезвед, халуун элсэн дээр аажмаар чанаж, Истанбулын эртний уламжлалыг өнөөдрийн аягандаа хадгалдаг. Кофе бүр нэг түүх, нэг уулзалт.",
+      "tr": "Türk kahvesini bakır cezvede, sıcak kumda ağır ağır pişirir, İstanbul'un asırlık geleneğini bugünün fincanında yaşatırız. Her kahve bir hikaye, her fincan bir buluşma."
+    },
+    "notice": {
+      "mn": "Захиалгаа кассанд өгнө үү",
+      "tr": "Lütfen siparişinizi kasaya veriniz"
+    },
+    "address": "Bereketzade Mah. Galata Kulesi Sk. No:14, 34421 Beyoğlu / İstanbul",
+    "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Galata+Kulesi+Beyo%C4%9Flu+%C4%B0stanbul",
+    "instagram": "galatakahve.ist",
+    "phone": "+90 212 245 14 53",
+    "wifi": "GalataKahve Misafir",
+    "open": "08:00",
+    "close": "23:30",
+    "payments": ["Visa", "Mastercard", "Troy", "Multinet", "Pluxee", "Ticket Restaurant", "Setcard"]
+  },
+  "categories": [
+    {
+      "id": "turk-kahvesi",
+      "name": "Türk Kahvesi",
+      "subtitle": { "mn": "Зэс жезвед чанасан уламжлалт Турк кофе", "tr": "Bakır cezvede pişen geleneksel lezzet" },
+      "items": [
+        { "id": "tk1", "name": "Közde Türk Kahvesi", "desc": { "mn": "Халуун элсэн дээр аажмаар чанасан, өтгөн хөөстэй. Лукум дагалдана.", "tr": "Sıcak kumda ağır ağır pişen, bol köpüklü. Yanında lokum ile." }, "price": 185, "kcal": 45, "allergens": ["treenut"], "badge": "signature", "available": true, "image": "" },
+        { "id": "tk2", "name": "Türk Kahvesi", "desc": { "mn": "Нарийн нунтагласан Араб кофе, сонгодог аргаар. Нэг аяга ус дагалдана.", "tr": "İnce çekilmiş Arabica, klasik usulde. Yanında bir bardak su ile." }, "price": 140, "kcal": 10, "allergens": [], "badge": "", "available": true, "image": "" },
+        { "id": "tk3", "name": "Duble Türk Kahvesi", "desc": { "mn": "Хоёр дахин их кофетой, илүү хүчтэй амт.", "tr": "Çift ölçü kahve ile daha yoğun bir tat." }, "price": 190, "kcal": 20, "allergens": [], "badge": "", "available": true, "image": "" },
+        { "id": "tk4", "name": "Damla Sakızlı Türk Kahvesi", "desc": { "mn": "Эгийн тэнгисийн дамла давирхайн сэнгэнэсэн үнэртэй.", "tr": "Ege'nin damla sakızı ile ferah bir aroma." }, "price": 165, "kcal": 15, "allergens": [], "badge": "", "available": true, "image": "" },
+        { "id": "tk5", "name": "Menengiç Kahvesi", "desc": { "mn": "Зэрлэг пистачио үрээр хийсэн, сүүтэй, кофейнгүй ундаа.", "tr": "Yabani fıstık çekirdeğinden, sütlü ve kafeinsiz." }, "price": 160, "kcal": 140, "allergens": ["treenut", "milk"], "badge": "", "available": true, "image": "" },
+        { "id": "tk6", "name": "Dibek Kahvesi", "desc": { "mn": "Чулуун уурганд нүдсэн, какао болон сүүний зөөлөн амттай.", "tr": "Taş dibekte dövülmüş, kakao ve süt notalı yumuşak içim." }, "price": 160, "kcal": 120, "allergens": ["milk"], "badge": "", "available": true, "image": "" },
+        { "id": "tk7", "name": "Osmanlı Kahvesi", "desc": { "mn": "Кардамон, шанцай болон какаотой Османы ордны жор.", "tr": "Kakule, tarçın ve kakaolu saray tarifi." }, "price": 170, "kcal": 60, "allergens": ["milk"], "badge": "new", "available": true, "image": "" }
+      ]
+    },
+    {
+      "id": "espresso-bar",
+      "name": "Espresso Bar",
+      "subtitle": { "mn": "Шинэхэн шарсан үрээр хийсэн халуун кофе", "tr": "Taze kavrulmuş çekirdekle sıcak kahveler" },
+      "items": [
+        { "id": "es1", "name": "Galata Latte", "desc": { "mn": "Шарсан самар, бал болон шанцайтай манай онцлох латте.", "tr": "Kavrulmuş fındık, bal ve tarçınlı imza lattemiz." }, "price": 215, "kcal": 230, "allergens": ["milk", "treenut"], "badge": "signature", "available": true, "image": "" },
+        { "id": "es2", "name": "Espresso", "desc": { "mn": "Нэг шот, өтгөн крематай.", "tr": "Tek shot, yoğun kremalı." }, "price": 120, "kcal": 5, "allergens": [], "badge": "", "available": true, "image": "" },
+        { "id": "es3", "name": "Doppio", "desc": { "mn": "Давхар шот эспрессо.", "tr": "Çift shot espresso." }, "price": 150, "kcal": 10, "allergens": [], "badge": "", "available": true, "image": "" },
+        { "id": "es4", "name": "Americano", "desc": { "mn": "Эспрессо, халуун ус.", "tr": "Espresso ve sıcak su." }, "price": 160, "kcal": 10, "allergens": [], "badge": "", "available": true, "image": "" },
+        { "id": "es5", "name": "Cortado", "desc": { "mn": "Эспрессо, тэнцүү хэмжээний бүлээн сүү.", "tr": "Espresso ve eşit ölçüde ılık süt." }, "price": 165, "kcal": 60, "allergens": ["milk"], "badge": "", "available": true, "image": "" },
+        { "id": "es6", "name": "Cappuccino", "desc": { "mn": "Эспрессо, уурын сүү, зузаан хөөс.", "tr": "Espresso, buharlı süt ve kalın köpük." }, "price": 180, "kcal": 120, "allergens": ["milk"], "badge": "", "available": true, "image": "" },
+        { "id": "es7", "name": "Latte", "desc": { "mn": "Эспрессо, их хэмжээний уурын сүү.", "tr": "Espresso ve bol buharlı süt." }, "price": 185, "kcal": 170, "allergens": ["milk"], "badge": "", "available": true, "image": "" },
+        { "id": "es8", "name": "Flat White", "desc": { "mn": "Давхар ристретто, торгомсог микро хөөс.", "tr": "Çift ristretto ve ipeksi mikro köpük." }, "price": 190, "kcal": 110, "allergens": ["milk"], "badge": "", "available": true, "image": "" },
+        { "id": "es9", "name": "Mocha", "desc": { "mn": "Эспрессо, хар шоколад, уурын сүү.", "tr": "Espresso, bitter çikolata ve buharlı süt." }, "price": 205, "kcal": 290, "allergens": ["milk", "soy"], "badge": "", "available": true, "image": "" }
+      ]
+    },
+    {
+      "id": "soguk-kahveler",
+      "name": "Soğuk Kahveler",
+      "subtitle": { "mn": "Мөстэй, сэрүүн кофе", "tr": "Buz gibi ferahlık" },
+      "items": [
+        { "id": "sk1", "name": "Cold Brew", "desc": { "mn": "18 цагийн турш хүйтэн усанд нэвчүүлсэн, зөөлөн исгэлэн амт.", "tr": "18 saat soğuk demlenmiş, yumuşak asiditeli." }, "price": 190, "kcal": 5, "allergens": [], "badge": "", "available": true, "image": "" },
+        { "id": "sk2", "name": "Iced Americano", "desc": { "mn": "Давхар эспрессо, мөс, хүйтэн ус.", "tr": "Çift espresso, buz ve soğuk su." }, "price": 170, "kcal": 10, "allergens": [], "badge": "", "available": true, "image": "" },
+        { "id": "sk3", "name": "Iced Latte", "desc": { "mn": "Эспрессо, хүйтэн сүү, мөс.", "tr": "Espresso, soğuk süt ve buz." }, "price": 195, "kcal": 150, "allergens": ["milk"], "badge": "", "available": true, "image": "" },
+        { "id": "sk4", "name": "Lokumlu Iced Latte", "desc": { "mn": "Сарнайн лукумын сироптой, ягаан туяатай мөстэй латте.", "tr": "Gül lokumu şuruplu, pembe dokunuşlu buzlu latte." }, "price": 220, "kcal": 210, "allergens": ["milk"], "badge": "new", "available": true, "image": "" },
+        { "id": "sk5", "name": "Karamelli Frappé", "desc": { "mn": "Кофе, сүү, карамель, цөцгийн хөөс.", "tr": "Kahve, süt, karamel ve krem şanti." }, "price": 215, "kcal": 380, "allergens": ["milk"], "badge": "", "available": true, "image": "" },
+        { "id": "sk6", "name": "Affogato", "desc": { "mn": "Ванилийн зайрмаг дээр халуун эспрессо.", "tr": "Vanilyalı dondurmanın üzerine sıcak espresso." }, "price": 210, "kcal": 220, "allergens": ["milk", "egg"], "badge": "", "available": true, "image": "" }
+      ]
+    },
+    {
+      "id": "cay-sicak",
+      "name": "Çay & Sıcak İçecekler",
+      "subtitle": { "mn": "Тулипан аягатай цай болон дулаацуулах ундаа", "tr": "İnce belli bardakta çay ve sıcak keyifler" },
+      "items": [
+        { "id": "cs1", "name": "Bardak Çay", "desc": { "mn": "Ризе цай, тулипан хэлбэртэй аяганд.", "tr": "Rize çayı, ince belli bardakta." }, "price": 60, "kcal": 2, "allergens": [], "badge": "", "available": true, "image": "" },
+        { "id": "cs2", "name": "Demlik Çay", "desc": { "mn": "Хоёр хүнд зориулсан давхар данх цай.", "tr": "İki kişilik çaydanlıkta demlik çay." }, "price": 190, "kcal": 4, "allergens": [], "badge": "", "available": true, "image": "" },
+        { "id": "cs3", "name": "Salep", "desc": { "mn": "Цахирмаа цэцгийн үндэстэй өтгөн сүүн ундаа, шанцайтай.", "tr": "Orkide kökünden yoğun sütlü içecek, tarçınlı." }, "price": 175, "kcal": 260, "allergens": ["milk"], "badge": "signature", "available": true, "image": "" },
+        { "id": "cs4", "name": "Sıcak Çikolata", "desc": { "mn": "Бельгийн шоколад, халуун сүү.", "tr": "Belçika çikolatası ve sıcak süt." }, "price": 185, "kcal": 340, "allergens": ["milk", "soy"], "badge": "", "available": true, "image": "" },
+        { "id": "cs5", "name": "Adaçayı", "desc": { "mn": "Анатолийн уулын мэргэн өвс, нимбэгтэй.", "tr": "Anadolu dağ adaçayı, limon ile." }, "price": 120, "kcal": 2, "allergens": [], "badge": "", "available": true, "image": "" },
+        { "id": "cs6", "name": "Ihlamur", "desc": { "mn": "Лиш модны цэцгийн тайвшруулах цай.", "tr": "Ihlamur çiçeğinden rahatlatıcı demleme." }, "price": 120, "kcal": 2, "allergens": [], "badge": "", "available": true, "image": "" },
+        { "id": "cs7", "name": "Kış Çayı", "desc": { "mn": "Шанцай, хумс, алим, жүрж бүхий өвлийн халуун цай.", "tr": "Tarçın, karanfil, elma ve portakallı kış çayı." }, "price": 140, "kcal": 40, "allergens": [], "badge": "", "available": true, "image": "" }
+      ]
+    },
+    {
+      "id": "soguk-icecekler",
+      "name": "Soğuk İçecekler",
+      "subtitle": { "mn": "Гэрийн жороор хийсэн сэрүүн ундаа", "tr": "Ev yapımı serinletici içecekler" },
+      "items": [
+        { "id": "si1", "name": "Ev Yapımı Limonata", "desc": { "mn": "Шинэхэн нимбэг, гаа, гэрийн жор.", "tr": "Taze limon ve nane ile ev yapımı." }, "price": 150, "kcal": 120, "allergens": [], "badge": "", "available": true, "image": "" },
+        { "id": "si2", "name": "Vişne Şerbeti", "desc": { "mn": "Османы уламжлалт интоорын шербет.", "tr": "Osmanlı usulü vişne şerbeti." }, "price": 140, "kcal": 130, "allergens": [], "badge": "", "available": true, "image": "" },
+        { "id": "si3", "name": "Taze Portakal Suyu", "desc": { "mn": "Шинээр шахсан жүржийн шүүс.", "tr": "Taze sıkılmış portakal suyu." }, "price": 170, "kcal": 110, "allergens": [], "badge": "", "available": true, "image": "" },
+        { "id": "si4", "name": "Ayran", "desc": { "mn": "Давстай, сэрүүн тараг ундаа.", "tr": "Köpüklü, tuzlu ve serin." }, "price": 80, "kcal": 75, "allergens": ["milk"], "badge": "", "available": true, "image": "" },
+        { "id": "si5", "name": "Meyveli Soda", "desc": { "mn": "Жимсний амттай рашаан ус.", "tr": "Meyve aromalı maden suyu." }, "price": 70, "kcal": 45, "allergens": [], "badge": "", "available": true, "image": "" },
+        { "id": "si6", "name": "Su", "desc": { "mn": "Ундны ус, 500 мл.", "tr": "İçme suyu, 500 ml." }, "price": 40, "kcal": 0, "allergens": [], "badge": "", "available": true, "image": "" }
+      ]
+    },
+    {
+      "id": "tatlilar",
+      "name": "Tatlılar",
+      "subtitle": { "mn": "Истанбулын амттан, кофены жинхэнэ хань", "tr": "Kahvenin en iyi dostu İstanbul tatlıları" },
+      "items": [
+        { "id": "ta1", "name": "Fıstıklı Baklava", "desc": { "mn": "Газиантепийн пистачиотой, 40 давхар нимгэн гурилтай, 4 зүсэм.", "tr": "Antep fıstıklı, 40 kat ince yufka, 4 dilim." }, "price": 320, "kcal": 520, "allergens": ["treenut", "gluten", "milk"], "badge": "signature", "available": true, "image": "" },
+        { "id": "ta2", "name": "Künefe", "desc": { "mn": "Халуун кадайф, сунадаг бяслаг, пистачио нунтаг.", "tr": "Sıcak kadayıf, uzayan peynir ve fıstık." }, "price": 290, "kcal": 610, "allergens": ["gluten", "milk", "treenut"], "badge": "", "available": true, "image": "" },
+        { "id": "ta3", "name": "Fırın Sütlaç", "desc": { "mn": "Зууханд шарсан будаатай сүүн амттан.", "tr": "Fırında üzeri kızarmış sütlü pirinç tatlısı." }, "price": 190, "kcal": 310, "allergens": ["milk", "egg"], "badge": "", "available": true, "image": "" },
+        { "id": "ta4", "name": "Kazandibi", "desc": { "mn": "Ёроолыг нь карамельжуулсан сүүн пудинг.", "tr": "Dibi karamelize sütlü muhallebi." }, "price": 195, "kcal": 330, "allergens": ["milk", "gluten"], "badge": "", "available": true, "image": "" },
+        { "id": "ta5", "name": "Trileçe", "desc": { "mn": "Гурван төрлийн сүүнд дэвтээсэн зөөлөн бялуу, карамельтай.", "tr": "Üç sütle ıslatılmış yumuşak kek, karamelli." }, "price": 210, "kcal": 390, "allergens": ["milk", "egg", "gluten"], "badge": "", "available": true, "image": "" },
+        { "id": "ta6", "name": "San Sebastian Cheesecake", "desc": { "mn": "Гадаргууг нь шатаасан, дотроо зөөлөн бяслагтай бялуу.", "tr": "Yanık yüzeyli, içi akışkan cheesecake." }, "price": 260, "kcal": 450, "allergens": ["milk", "egg", "gluten"], "badge": "", "available": true, "image": "" },
+        { "id": "ta7", "name": "Tiramisu", "desc": { "mn": "Турк кофенд дэвтээсэн бисквит, маскарпоне.", "tr": "Türk kahvesine batırılmış bisküvi ve mascarpone." }, "price": 240, "kcal": 420, "allergens": ["milk", "egg", "gluten"], "badge": "new", "available": true, "image": "" },
+        { "id": "ta8", "name": "Lokum Tabağı", "desc": { "mn": "Сарнай, нар, пистачио амттай таван лукум.", "tr": "Gül, nar ve fıstıklı beş parça lokum." }, "price": 150, "kcal": 230, "allergens": ["treenut"], "badge": "", "available": true, "image": "" }
+      ]
+    },
+    {
+      "id": "kahvalti",
+      "name": "Kahvaltı & Atıştırmalık",
+      "subtitle": { "mn": "Өглөөний цай болон хөнгөн зууш", "tr": "Kahvaltılık ve hafif lezzetler" },
+      "items": [
+        { "id": "ka1", "name": "Simit Tabağı", "desc": { "mn": "Гүнжидтэй симит, цагаан бяслаг, улаан лооль, өргөст хэмх, чидун.", "tr": "Susamlı simit, beyaz peynir, domates, salatalık ve zeytin." }, "price": 210, "kcal": 480, "allergens": ["gluten", "sesame", "milk"], "badge": "", "available": true, "image": "" },
+        { "id": "ka2", "name": "Menemen", "desc": { "mn": "Улаан лооль, чинжүү, өндөгтэй уламжлалт Турк хайруулын хоол.", "tr": "Domates, biber ve yumurta ile geleneksel menemen." }, "price": 260, "kcal": 390, "allergens": ["egg", "gluten"], "badge": "", "available": true, "image": "" },
+        { "id": "ka3", "name": "Su Böreği", "desc": { "mn": "Буцалгасан нимгэн гурилан давхаргатай, бяслагтай бөрөк.", "tr": "Haşlanmış yufka katlarıyla peynirli su böreği." }, "price": 220, "kcal": 430, "allergens": ["gluten", "milk", "egg"], "badge": "", "available": true, "image": "" },
+        { "id": "ka4", "name": "Kaşarlı Tost", "desc": { "mn": "Кашар бяслагтай шарсан талх, даршилсан ногоо дагалдана.", "tr": "Kaşar peynirli tost, yanında turşu ile." }, "price": 190, "kcal": 410, "allergens": ["gluten", "milk"], "badge": "", "available": true, "image": "" },
+        { "id": "ka5", "name": "Sucuklu Yumurta", "desc": { "mn": "Халуун ногоотой суджук хиам, нүдэн өндөг.", "tr": "Baharatlı sucuk ve göz yumurta." }, "price": 270, "kcal": 520, "allergens": ["egg", "mustard"], "badge": "", "available": true, "image": "" },
+        { "id": "ka6", "name": "Zeytinyağlı Poğaça", "desc": { "mn": "Чидуны тостой зөөлөн боов, хоёр ширхэг.", "tr": "Zeytinyağlı yumuşak poğaça, iki adet." }, "price": 90, "kcal": 340, "allergens": ["gluten", "sesame", "egg"], "badge": "", "available": true, "image": "" }
+      ]
+    }
+  ]
+}

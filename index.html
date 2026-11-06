@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Galata Kahve · Цэс</title>
+  <meta name="description" content="Galata Kahve, Истанбулын Галата дахь Турк кофе шоп. Дижитал цэс: Türk Kahvesi, Espresso Bar, Tatlılar." />
+  <meta name="theme-color" content="#1a0805" />
+  <meta property="og:title" content="Galata Kahve · Цэс" />
+  <meta property="og:description" content="Нэг аяга кофены дурсамж дөчин жил үлддэг." />
+  <meta property="og:image" content="/assets/og.jpg" />
+  <link rel="icon" href="/assets/favicon.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/app.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="topbar" id="topbar">
+    <a class="brand" href="#top" aria-label="Galata Kahve">
+      <img src="/assets/icon-512.png" alt="" width="40" height="40" />
+      <span class="brand-text">
+        <b>Galata Kahve</b>
+        <small>Kahve Dükkanı</small>
+      </span>
+    </a>
+    <div class="lang" role="group" aria-label="Хэл">
+      <button type="button" data-lang="tr">TR</button>
+      <button type="button" data-lang="mn" class="on">MN</button>
+    </div>
+  </header>
+
+  <nav class="catbar" id="catbar" aria-label="Ангилал">
+    <div class="cats" id="cats"></div>
+    <div class="tools">
+      <button type="button" class="tool" id="btnSearch" aria-label="Хайх">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+      </button>
+      <button type="button" class="tool" id="btnFilter" aria-label="Шүүлтүүр">
+        <svg viewBox="0 0 24 24"><path d="M4 5h16l-6.2 7.4V19l-3.6 1.6v-8.2z"/></svg>
+        <i class="dot" id="filterDot" hidden></i>
+      </button>
+    </div>
+    <div class="searchbar" id="searchbar" hidden>
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+      <input id="q" type="search" autocomplete="off" />
+      <button type="button" id="qClose" aria-label="Хаах">✕</button>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <svg class="skyline" viewBox="0 0 800 160" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <path d="M0 160V128h40v-14h22v14h30v-22h18v22h28V96l10-8 10 8v32h26v-18h30v18h24V70l6-42 6 42v58h20v-26h34v26h22V84h12l4-30h4l2-20 2 20h4l4 30h12v44h40v-40c0-26 30-44 56-44s56 18 56 44v40h18V40l3-24 3 24v88h14v-30h30v30h40V60l3-22 3 22v68h26v-16h40v16h32v-24h28v24h38V160z"/>
+      </svg>
+      <div class="hero-in">
+        <img class="emblem" src="/assets/emblem.webp" alt="Galata Kahve лого" width="540" height="386" />
+        <p class="eyebrow" data-i="since"></p>
+        <h1 class="tagline" data-b="tagline"></h1>
+        <div class="status" id="status"><i></i><span></span></div>
+      </div>
+    </section>
+
+    <div class="notice" data-b="notice"></div>
+
+    <div id="menu" class="menu" aria-live="polite"></div>
+    <p class="empty" id="empty" hidden></p>
+
+    <section class="fal" id="fal">
+      <div class="fal-cup" id="falCup" aria-hidden="true">
+        <svg viewBox="0 0 120 120">
+          <ellipse cx="60" cy="96" rx="46" ry="9" class="saucer"/>
+          <path d="M26 44h68l-6 40c-1.6 9-10 14-28 14s-26.4-5-28-14z" class="cup"/>
+          <path d="M94 52c12 0 14 18 0 20" class="handle"/>
+          <ellipse cx="60" cy="44" rx="34" ry="7" class="rim"/>
+          <g class="grounds"><circle cx="48" cy="44" r="2.4"/><circle cx="58" cy="42" r="1.6"/><circle cx="70" cy="45" r="2.2"/><circle cx="64" cy="47" r="1.2"/><circle cx="52" cy="47" r="1.3"/></g>
+        </svg>
+      </div>
+      <div class="fal-txt">
+        <h2 data-i="falTitle"></h2>
+        <p id="falText" data-i="falIntro"></p>
+        <button type="button" class="btn-amber" id="falBtn" data-i="falBtn"></button>
+      </div>
+    </section>
+
+    <section class="proverb">
+      <span class="star" aria-hidden="true">✦</span>
+      <blockquote>
+        <p class="tr-quote" data-b="proverb.tr"></p>
+        <p class="mn-quote" data-b="proverb.mn"></p>
+      </blockquote>
+      <p class="story" data-b="story"></p>
+    </section>
+
+    <section class="legend" id="legend">
+      <h2 data-i="allergenTitle"></h2>
+      <p class="legend-sub" data-i="allergenSub"></p>
+      <div class="legend-grid" id="legendGrid"></div>
+    </section>
+
+    <section class="info">
+      <a class="card loc" id="locCard" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.4A7 7 0 0 1 19 9.6C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.6" r="2.6"/></svg></span>
+        <span><small data-i="location"></small><b id="addr"></b><em data-i="openMap"></em></span>
+      </a>
+      <div class="row2">
+        <a class="card" id="igCard" target="_blank" rel="noopener">
+          <span class="ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/></svg></span>
+          <span><small>Instagram</small><b id="ig"></b></span>
+        </a>
+        <a class="card" id="telCard">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M5 3.8 8.6 3l2 4.6-2.4 1.8a12 12 0 0 0 6.4 6.4l1.8-2.4 4.6 2-.8 3.6c-.2.8-.9 1.2-1.7 1.2C10.4 20.2 3.8 13.6 3.8 5.5c0-.8.4-1.5 1.2-1.7z"/></svg></span>
+          <span><small data-i="phone"></small><b id="tel"></b></span>
+        </a>
+      </div>
+      <div class="row2">
+        <div class="card">
+          <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span>
+          <span><small data-i="hours"></small><b id="hours"></b></span>
+        </div>
+        <div class="card">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M2.5 9a14 14 0 0 1 19 0M5.5 12.4a9.6 9.6 0 0 1 13 0M8.6 15.8a5 5 0 0 1 6.8 0"/><circle cx="12" cy="19" r="1.2" fill="currentColor"/></svg></span>
+          <span><small>Wi Fi</small><b id="wifi"></b></span>
+        </div>
+      </div>
+      <div class="card pay">
+        <h3 data-i="payments"></h3>
+        <div class="chips" id="pays"></div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <img src="/assets/emblem.webp" alt="" width="120" height="86" />
+      <p data-i="footNote"></p>
+      <p class="tiny">© <span id="yr"></span> Galata Kahve · Beyoğlu, İstanbul</p>
+    </footer>
+  </main>
+
+  <!-- Filter sheet -->
+  <div class="sheet" id="filterSheet" hidden>
+    <div class="sheet-bg" data-close></div>
+    <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="fTitle">
+      <div class="grab"></div>
+      <h3 id="fTitle" data-i="filterTitle"></h3>
+      <p class="muted" data-i="filterSub"></p>
+      <div class="fgrid" id="fgrid"></div>
+      <label class="switch"><input type="checkbox" id="fSig" /><span></span><b data-i="onlySignature"></b></label>
+      <div class="sheet-actions">
+        <button type="button" class="btn-ghost" id="fClear" data-i="clear"></button>
+        <button type="button" class="btn-amber" data-close data-i="apply"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Item sheet -->
+  <div class="sheet" id="itemSheet" hidden>
+    <div class="sheet-bg" data-close></div>
+    <div class="sheet-panel item-panel" role="dialog" aria-modal="true">
+      <div class="grab"></div>
+      <div id="itemBody"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="/assets/allergens.js"></script>
+  <script src="/assets/app.js"></script>
+</body>
+</html>
