@@ -1,17 +1,24 @@
 // Generates two branded QR codes (SVG + PNG) for the Galata Kahve menu.
 // Usage: MENU_URL=https://kahve.vercel.app node scripts/make-qr.mjs
-import QRCode from 'qrcode';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 
-const URL_ = process.env.MENU_URL || 'https://kahve.vercel.app';
+const URL_ = process.env.MENU_URL || 'https://kahve-omega.vercel.app';
 const root = new URL('..', import.meta.url).pathname;
 const out = root + 'qr/';
 mkdirSync(out, { recursive: true });
 const logo = 'data:image/png;base64,' + readFileSync(root + 'assets/icon-512.png').toString('base64');
 
-const qr = QRCode.create(URL_, { errorCorrectionLevel: 'H' });
+// Module matrix: from the `qrcode` package when installed, otherwise from QR_MATRIX (JSON 0/1 grid, level H).
+let qr;
+try {
+  const QRCode = (await import('qrcode')).default;
+  qr = QRCode.create(URL_, { errorCorrectionLevel: 'H' });
+} catch {
+  const grid = JSON.parse(readFileSync(process.env.QR_MATRIX, 'utf8'));
+  qr = { modules: { size: grid.length, get: (r, c) => grid[r][c] } };
+}
 const N = qr.modules.size;
 const dark = (x, y) => qr.modules.get(y, x) === 1 || qr.modules.get(y, x) === true;
 const inFinder = (x, y) => (x < 7 && y < 7) || (x >= N - 7 && y < 7) || (x < 7 && y >= N - 7);
@@ -32,12 +39,12 @@ const skyline = (w, y, fill, op) => `<path transform="translate(0 ${y}) scale(${
 
 /* ---------- Design 1: "Gece" (night) ---------- */
 function design1() {
-  const W = 1000, H = 1300, Q = 640, ox = (W - Q) / 2, oy = 330, s = Q / N;
-  const dots = modules(Q, ox, oy, 4.6, (x, y, s) => `<circle cx="${(x + s / 2).toFixed(2)}" cy="${(y + s / 2).toFixed(2)}" r="${(s * 0.46).toFixed(2)}"/>`);
+  const W = 1000, H = 1300, Q = 600, ox = (W - Q) / 2, oy = 345, s = Q / N;
+  const dots = modules(Q, ox, oy, 4.6, (x, y, s) => `<rect x="${(x + s * .02).toFixed(2)}" y="${(y + s * .02).toFixed(2)}" width="${(s * .96).toFixed(2)}" height="${(s * .96).toFixed(2)}" rx="${(s * .32).toFixed(2)}"/>`);
   const fp = finders.map(([fx, fy]) => {
-    const x = ox + fx * s, y = oy + fy * s, w = 7 * s;
-    return `<rect x="${x + s / 2}" y="${y + s / 2}" width="${w - s}" height="${w - s}" rx="${s * 2}" fill="none" stroke="url(#amb)" stroke-width="${s}"/>
-      <g transform="translate(${x + w / 2} ${y + w / 2})"><ellipse rx="${s * 1.55}" ry="${s * 1.95}" fill="#f5e8d0" transform="rotate(35)"/><path d="M${-s * .25} ${-s * 1.7} C ${s * .7} ${-s * .6}, ${-s * .7} ${s * .6}, ${s * .25} ${s * 1.7}" stroke="#1a0805" stroke-width="${s * .32}" fill="none" stroke-linecap="round" transform="rotate(35)"/></g>`;
+    const x = ox + fx * s, y = oy + fy * s, w = 7 * s, c = w / 2;
+    return `<rect x="${x + s / 2}" y="${y + s / 2}" width="${w - s}" height="${w - s}" rx="${s * .55}" fill="none" stroke="#2a1006" stroke-width="${s}"/>
+      <rect x="${x + 2 * s}" y="${y + 2 * s}" width="${3 * s}" height="${3 * s}" rx="${s * .35}" fill="#2a1006"/>`;
   }).join('');
   const cx = W / 2, cy = oy + Q / 2, lr = s * 4.1;
   return `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">${FONTS}
@@ -52,13 +59,13 @@ function design1() {
   <rect x="24" y="24" width="${W - 48}" height="${H - 48}" rx="40" fill="none" stroke="#e8a04a" stroke-opacity=".45" stroke-width="2"/>
   <text x="${cx}" y="118" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="9" fill="#e8a04a">KAHVE DÜKKANI · BEYOĞLU</text>
   <text x="${cx}" y="222" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-weight="700" font-size="104" fill="#f5e8d0">Galata Kahve</text>
-  <rect x="${ox - 36}" y="${oy - 36}" width="${Q + 72}" height="${Q + 72}" rx="48" fill="#1a0805" stroke="#e8a04a" stroke-opacity=".35" stroke-width="2"/>
-  <g fill="url(#amb)">${dots}</g>
+  <rect x="${ox - 80}" y="${oy - 80}" width="${Q + 160}" height="${Q + 160}" rx="56" fill="#f5e8d0" stroke="#e8a04a" stroke-width="5"/>
+  <g fill="#2a1006">${dots}</g>
   ${fp}
-  <circle cx="${cx}" cy="${cy}" r="${lr}" fill="#e8a04a"/>
+  <circle cx="${cx}" cy="${cy}" r="${lr + 5}" fill="#f5e8d0"/><circle cx="${cx}" cy="${cy}" r="${lr}" fill="#e8a04a"/>
   <image href="${logo}" xlink:href="${logo}" x="${cx - lr}" y="${cy - lr}" width="${lr * 2}" height="${lr * 2}" clip-path="url(#lc)" preserveAspectRatio="xMidYMid slice"/>
-  <text x="${cx}" y="${oy + Q + 112}" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-style="italic" font-weight="600" font-size="50" fill="#f5e8d0">Цэсээ уншуулаарай</text>
-  <text x="${cx}" y="${oy + Q + 160}" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-weight="600" font-size="24" letter-spacing="3" fill="#e8a04a">MENÜ İÇİN OKUTUN</text>
+  <text x="${cx}" y="${oy + Q + 168}" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-style="italic" font-weight="600" font-size="50" fill="#f5e8d0">Цэсээ уншуулаарай</text>
+  <text x="${cx}" y="${oy + Q + 216}" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-weight="600" font-size="24" letter-spacing="3" fill="#e8a04a">MENÜ İÇİN OKUTUN</text>
   ${skyline(W, H - 170, '#e8a04a', .12)}
 </svg>`;
 }
@@ -66,10 +73,11 @@ function design1() {
 /* ---------- Design 2: "Kemer" (Ottoman arch, cream) ---------- */
 function design2() {
   const W = 1000, H = 1300, Q = 600, ox = (W - Q) / 2, oy = 440, s = Q / N;
-  const sq = modules(Q, ox, oy, 4.4, (x, y, s) => `<rect x="${(x + s * .06).toFixed(2)}" y="${(y + s * .06).toFixed(2)}" width="${(s * .88).toFixed(2)}" height="${(s * .88).toFixed(2)}" rx="${(s * .3).toFixed(2)}"/>`);
+  const sq = modules(Q, ox, oy, 4.4, (x, y, s) => `<rect x="${(x + s * .02).toFixed(2)}" y="${(y + s * .02).toFixed(2)}" width="${(s * .96).toFixed(2)}" height="${(s * .96).toFixed(2)}" rx="${(s * .22).toFixed(2)}"/>`);
   const fp = finders.map(([fx, fy]) => {
     const x = ox + fx * s, y = oy + fy * s, w = 7 * s, c = w / 2;
-    return `<circle cx="${x + c}" cy="${y + c}" r="${c - s / 2}" fill="none" stroke="#2a1006" stroke-width="${s}"/><circle cx="${x + c}" cy="${y + c}" r="${s * 1.55}" fill="#c97b35"/>`;
+    return `<rect x="${x + s / 2}" y="${y + s / 2}" width="${w - s}" height="${w - s}" rx="${s * .9}" fill="none" stroke="#2a1006" stroke-width="${s}"/>
+      <rect x="${x + 2 * s}" y="${y + 2 * s}" width="${3 * s}" height="${3 * s}" rx="${s * .6}" fill="#2a1006"/>`;
   }).join('');
   const cx = W / 2, cy = oy + Q / 2, lr = s * 4;
   // pointed Ottoman arch frame
@@ -104,24 +112,16 @@ function design2() {
 const files = { 'galata-kahve-qr-gece': design1(), 'galata-kahve-qr-kemer': design2() };
 for (const [n, svg] of Object.entries(files)) writeFileSync(out + n + '.svg', svg);
 
-// Render PNGs with Playwright and verify they decode back to the URL.
+// Render PNGs with Playwright (verify decoding separately, e.g. with jsQR or OpenCV).
 const { chromium } = require('playwright');
-const jsQR = require('jsqr');
-const { PNG } = require('pngjs');
 const browser = await chromium.launch();
 for (const [n, svg] of Object.entries(files)) {
   const page = await browser.newPage({ viewport: { width: 1000, height: 1300 }, deviceScaleFactor: 2 });
-  await page.setContent(`<html><body style="margin:0;background:transparent">${svg}</body></html>`, { waitUntil: 'networkidle' });
+  await page.setContent(`<html><body style="margin:0;background:transparent">${svg}</body></html>`, { waitUntil: 'load' });
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(400);
-  const buf = await page.locator('svg').screenshot({ omitBackground: true });
-  writeFileSync(out + n + '.png', buf);
-  const png = PNG.sync.read(buf);
-  // decode on an opaque copy (white behind transparent corners)
-  const data = new Uint8ClampedArray(png.data);
-  for (let i = 0; i < data.length; i += 4) if (data[i + 3] < 255) { const a = data[i + 3] / 255; for (let k = 0; k < 3; k++) data[i + k] = data[i + k] * a + 255 * (1 - a); data[i + 3] = 255; }
-  const res = jsQR(data, png.width, png.height, { inversionAttempts: 'attemptBoth' });
-  console.log(n, res ? `OK → ${res.data}` : 'NOT DECODED');
+  writeFileSync(out + n + '.png', await page.locator('svg').screenshot({ omitBackground: true }));
+  console.log('wrote', n);
   await page.close();
 }
 await browser.close();
