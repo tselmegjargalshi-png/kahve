@@ -5,25 +5,6 @@
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
   const UI = {
-    mn: {
-      since: 'Истанбул · Галата · 1924 оноос',
-      search: 'Бүтээгдэхүүн хайх…',
-      open: 'Одоо нээлттэй', closed: 'Одоо хаалттай', closesAt: 'хаагдана', opensAt: 'нээгдэнэ',
-      kcal: 'ккал', signature: 'Онцлох', new: 'Шинэ', sold: 'Дууссан',
-      allergenTitle: 'Харшлын мэдээлэл', allergenSub: 'Харшилтай бол захиалахын өмнө манай баристад хэлээрэй.',
-      location: 'Байршил', openMap: 'Газрын зураг нээх', phone: 'Утас', hours: 'Цагийн хуваарь',
-      hoursText: (o, c) => `Өдөр бүр ${o} цагаас ${c} хүртэл`,
-      payments: 'Хүлээн авах төлбөрийн хэрэгсэл',
-      filterTitle: 'Шүүлтүүр', filterSub: 'Хасах харшлаа сонго. Тухайн орцтой бүтээгдэхүүн нуугдана.',
-      onlySignature: 'Зөвхөн онцлох бүтээгдэхүүн', clear: 'Цэвэрлэх', apply: 'Хэрэглэх',
-      empty: 'Таны хайлтад тохирох зүйл олдсонгүй.',
-      contains: 'Агуулж буй харшил үүсгэгч', noAllergen: 'Мэдэгдэж буй харшил үүсгэгч агуулаагүй',
-      price: 'Үнэ', energy: 'Илчлэг',
-      falTitle: 'Кофены мэргэ', falIntro: 'Турк кофегоо уусны дараа аягаа эргүүлээд хувь заяагаа уншуулдаг заншил бий. Туршаад үз.',
-      falBtn: 'Аягаа эргүүлэх', falAgain: 'Дахин эргүүлэх',
-      footNote: 'Бүх үнэ Турк лираар (₺), НӨАТ орсон. Илчлэгийн утга ойролцоо.',
-      results: (n) => `${n} бүтээгдэхүүн олдлоо`,
-    },
     tr: {
       since: 'İstanbul · Galata · 1924\'ten beri',
       search: 'Ürün ara…',
@@ -46,18 +27,6 @@
   };
 
   const FORTUNES = {
-    mn: [
-      'Аяганы ёроолд шувуу харагдаж байна. Удахгүй сайн мэдээ ирнэ.',
-      'Зам дүрслэгдлээ. Ойрын хугацаанд гэнэтийн аялал хүлээж байна.',
-      'Зүрхний дүрс тод байна. Таныг хайртай хүн тань санаж байна.',
-      'Загас харагдлаа. Санхүүгийн хувьд бэлгэ сайн өдөр.',
-      'Галатын цамхаг шиг өндөр зорилго тань биелэх цаг ойрхон.',
-      'Хоёр зам салаалж байна. Зүрхнийхээ дуудлагыг дага.',
-      'Сар хавирган дүрстэй. Шинэ эхлэлд тохиромжтой үе.',
-      'Аяганд од гэрэлтэж байна. Хүсэл тань биелнэ.',
-      'Түлхүүр харагдлаа. Удаан хаалттай байсан хаалга нээгдэнэ.',
-      'Мод ургаж байна. Тэвчээр тань үр жимсээ өгнө.',
-    ],
     tr: [
       'Fincanın dibinde bir kuş var. Yakında güzel bir haber alacaksınız.',
       'Bir yol görünüyor. Yakında beklenmedik bir yolculuk var.',
@@ -73,12 +42,11 @@
   };
 
   const state = {
-    lang: 'mn', menu: null, q: '', exclude: new Set(), sigOnly: false,
+    lang: 'tr', menu: null, q: '', exclude: new Set(), sigOnly: false,
   };
-  try { const l = localStorage.getItem('gk_lang'); if (l === 'tr' || l === 'mn') state.lang = l; } catch {}
 
   const t = (k, ...a) => { const v = UI[state.lang][k]; return typeof v === 'function' ? v(...a) : v; };
-  const L = (o) => (o && typeof o === 'object' ? (o[state.lang] ?? o.mn ?? o.tr ?? '') : (o ?? ''));
+  const L = (o) => (o && typeof o === 'object' ? (o.tr ?? '') : (o ?? ''));
   const fmtPrice = (p) => `${Number(p).toLocaleString('tr-TR', { maximumFractionDigits: 2 })}<small>₺</small>`;
   const norm = (s) => String(s || '').toLocaleLowerCase('tr').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ı/g, 'i');
 
@@ -98,7 +66,7 @@
 
   /* ---------- rendering ---------- */
   function applyStatic() {
-    document.documentElement.lang = state.lang === 'tr' ? 'tr' : 'mn';
+    document.documentElement.lang = 'tr';
     $$('[data-i]').forEach((el) => { el.textContent = t(el.dataset.i); });
     const b = state.menu.brand;
     $$('[data-b]').forEach((el) => {
@@ -106,7 +74,6 @@
       let v = b; for (const p of path) v = v?.[p];
       el.textContent = typeof v === 'object' ? L(v) : (v || '');
     });
-    $$('.lang button').forEach((x) => x.classList.toggle('on', x.dataset.lang === state.lang));
     $('#q').placeholder = t('search');
     $('#addr').textContent = b.address;
     $('#locCard').href = b.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(b.address)}`;
@@ -131,7 +98,7 @@
       if (state.sigOnly && i.badge !== 'signature') return false;
       if (i.allergens?.some((a) => state.exclude.has(a))) return false;
       if (q) {
-        const hay = norm([i.name, i.desc?.mn, i.desc?.tr, cat.name].join(' '));
+        const hay = norm([i.name, i.desc?.tr, cat.name].join(' '));
         if (!hay.includes(q)) return false;
       }
       return true;
@@ -250,11 +217,6 @@
 
   /* ---------- events ---------- */
   function bind() {
-    $$('.lang button').forEach((b) => b.addEventListener('click', () => {
-      state.lang = b.dataset.lang;
-      try { localStorage.setItem('gk_lang', state.lang); } catch {}
-      applyStatic(); render(); resetFal();
-    }));
     $('#cats').addEventListener('click', (e) => {
       const b = e.target.closest('[data-go]'); if (!b) return;
       document.getElementById('c-' + b.dataset.go)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -315,7 +277,7 @@
     try {
       state.menu = await loadMenu();
     } catch (e) {
-      $('#menu').innerHTML = '<p class="empty">Цэс ачаалж чадсангүй. Дахин оролдоно уу.</p>';
+      $('#menu').innerHTML = '<p class="empty">Menü yüklenemedi. Lütfen tekrar deneyin.</p>';
       return;
     }
     applyStatic(); render(); bind();

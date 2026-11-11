@@ -16,7 +16,7 @@
   function setDirty(v = true) {
     S.dirty = v;
     const el = $('#saveState');
-    el.textContent = v ? 'Хадгалаагүй өөрчлөлт' : 'Хадгалсан';
+    el.textContent = v ? 'Kaydedilmemiş değişiklik' : 'Kaydedildi';
     el.classList.toggle('dirty', v);
     if (v && S.storage !== 'blob') { try { localStorage.setItem('gk_menu_local', JSON.stringify(S.menu)); } catch {} }
   }
@@ -31,7 +31,7 @@
     try {
       const r = await fetch('/api/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ password: $('#pw').value }) });
       const d = await r.json().catch(() => ({}));
-      if (!r.ok || !d.ok) throw new Error(d.error || 'Нэвтэрч чадсангүй (' + r.status + ')');
+      if (!r.ok || !d.ok) throw new Error(d.error || 'Giriş yapılamadı (' + r.status + ')');
       S.token = d.token; S.storage = d.storage;
       try { sessionStorage.setItem('gk_token', d.token); } catch {}
       await boot();
@@ -49,7 +49,7 @@
       b.hidden = true;
     } else {
       b.hidden = false;
-      b.innerHTML = '<b>Анхаар:</b> Сервер талын хадгалалт (Vercel Blob) холбогдоогүй байна. Өөрчлөлт зөвхөн энэ хөтөч дээр хадгалагдана. Шалгахдаа <a href="/?preview" target="_blank" style="text-decoration:underline">/?preview</a> хаягаар нээнэ үү. Бүх хэрэглэгчид харагдуулахын тулд JSON татаж аваад <code>data/menu.json</code> файлыг шинэчилнэ үү.';
+      b.innerHTML = '<b>Dikkat:</b> Sunucu tarafı depolama (Vercel Blob) bağlı değil. Değişiklikler yalnızca bu tarayıcıda saklanır. Kontrol etmek için <a href="/?preview" target="_blank" style="text-decoration:underline">/?preview</a> adresini açın. Herkese göstermek için JSON dosyasını indirip <code>data/menu.json</code> dosyasını güncelleyin.';
     }
     renderSide(); renderPane();
   }
@@ -71,15 +71,15 @@
     try {
       if (S.storage !== 'blob') {
         localStorage.setItem('gk_menu_local', JSON.stringify(S.menu));
-        setDirty(false); toast('Энэ хөтөч дээр хадгаллаа');
+        setDirty(false); toast('Bu tarayıcıda kaydedildi');
         return;
       }
       const r = await api('/api/menu', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(S.menu) });
       const d = await r.json().catch(() => ({}));
-      if (r.status === 401) { logout(); throw new Error('Нэвтрэх хугацаа дууссан. Дахин нэвтэрнэ үү.'); }
-      if (!r.ok || !d.ok) throw new Error(d.error || 'Хадгалж чадсангүй');
+      if (r.status === 401) { logout(); throw new Error('Oturum süresi doldu. Lütfen tekrar giriş yapın.'); }
+      if (!r.ok || !d.ok) throw new Error(d.error || 'Kaydedilemedi');
       S.menu.updatedAt = d.updatedAt;
-      setDirty(false); toast('Хадгаллаа ✓ Цэс шинэчлэгдлээ');
+      setDirty(false); toast('Kaydedildi ✓ Menü güncellendi');
     } catch (err) { toast(err.message); } finally { btn.disabled = false; }
   }
   $('#saveBtn').addEventListener('click', save);
@@ -101,12 +101,12 @@
     try {
       const m = JSON.parse(await f.text());
       if (!m.brand || !Array.isArray(m.categories)) throw new Error();
-      S.menu = m; setDirty(); S.view = 'brand'; renderSide(); renderPane(); toast('JSON орууллаа. Хадгалахаа мартуузай.');
-    } catch { toast('JSON файл буруу байна'); }
+      S.menu = m; setDirty(); S.view = 'brand'; renderSide(); renderPane(); toast('JSON yüklendi. Kaydetmeyi unutmayın.');
+    } catch { toast('JSON dosyası geçersiz'); }
     e.target.value = '';
   });
   $('#resetBtn').addEventListener('click', async () => {
-    if (!confirm('Анхны цэс рүү сэргээх үү? Хадгалах товч дарах хүртэл нийтэд нөлөөлөхгүй.')) return;
+    if (!confirm('İlk menüye dönülsün mü? Kaydet düğmesine basana kadar yayına yansımaz.')) return;
     S.menu = await (await fetch('/data/menu.json', { cache: 'no-store' })).json();
     setDirty(); S.view = 'brand'; renderSide(); renderPane();
   });
@@ -123,9 +123,9 @@
     S.open.clear(); renderSide(); renderPane(); window.scrollTo({ top: 0, behavior: 'smooth' });
   });
   $('#addCat').addEventListener('click', () => {
-    const name = prompt('Ангиллын нэр (Турк хэлээр), жишээ нь: Kurabiyeler');
+    const name = prompt('Kategori adı, örneğin: Kurabiyeler');
     if (!name) return;
-    S.menu.categories.push({ id: slug(name) + '_' + Math.random().toString(36).slice(2, 5), name, subtitle: { mn: '', tr: '' }, items: [] });
+    S.menu.categories.push({ id: slug(name) + '_' + Math.random().toString(36).slice(2, 5), name, subtitle: { tr: '' }, items: [] });
     S.view = S.menu.categories.length - 1; setDirty(); renderSide(); renderPane();
   });
 
@@ -140,20 +140,20 @@
     if (S.view === 'brand') {
       const b = S.menu.brand;
       p.innerHTML = `
-      <div class="panel"><h2>Ерөнхий мэдээлэл</h2><p class="muted">Цэсний толгой, уриа үг, холбоо барих мэдээлэл.</p>
-        <h3>Уриа үг</h3>
-        <div class="grid2">${fld('Уриа (MN)', 'brand.tagline.mn', b.tagline?.mn)}${fld('Уриа (TR)', 'brand.tagline.tr', b.tagline?.tr)}</div>
-        <div class="grid2">${fld('Зүйр үг (TR)', 'brand.proverb.tr', b.proverb?.tr)}${fld('Зүйр үгийн орчуулга (MN)', 'brand.proverb.mn', b.proverb?.mn)}</div>
-        <div class="grid2">${fld('Түүх (MN)', 'brand.story.mn', b.story?.mn, 'textarea')}${fld('Түүх (TR)', 'brand.story.tr', b.story?.tr, 'textarea')}</div>
-        <div class="grid2">${fld('Мэдэгдэл (MN)', 'brand.notice.mn', b.notice?.mn)}${fld('Мэдэгдэл (TR)', 'brand.notice.tr', b.notice?.tr)}</div>
-        <p class="hint">Мэдэгдлийг хоосон орхивол цэсэнд харагдахгүй.</p>
+      <div class="panel"><h2>Genel bilgiler</h2><p class="muted">Menü başlığı, slogan ve iletişim bilgileri.</p>
+        <h3>Slogan ve hikâye</h3>
+        ${fld('Slogan', 'brand.tagline.tr', b.tagline?.tr)}
+        ${fld('Atasözü', 'brand.proverb.tr', b.proverb?.tr)}
+        ${fld('Hikâye', 'brand.story.tr', b.story?.tr, 'textarea')}
+        ${fld('Duyuru', 'brand.notice.tr', b.notice?.tr)}
+        <p class="hint">Duyuru boş bırakılırsa menüde görünmez.</p>
       </div>
-      <div class="panel"><h3>Холбоо барих</h3>
-        ${fld('Хаяг', 'brand.address', b.address)}
-        ${fld('Google Maps холбоос', 'brand.mapsUrl', b.mapsUrl, 'url')}
-        <div class="grid2">${fld('Instagram (@ гүйгээр)', 'brand.instagram', b.instagram)}${fld('Утас', 'brand.phone', b.phone, 'tel')}</div>
-        <div class="grid3 keep">${fld('Нээх цаг', 'brand.open', b.open, 'time')}${fld('Хаах цаг', 'brand.close', b.close, 'time')}${fld('Wi Fi нэр', 'brand.wifi', b.wifi)}</div>
-        ${fld('Төлбөрийн хэрэгсэл (таслалаар тусгаарла)', 'brand.payments', (b.payments || []).join(', '))}
+      <div class="panel"><h3>İletişim</h3>
+        ${fld('Adres', 'brand.address', b.address)}
+        ${fld('Google Maps bağlantısı', 'brand.mapsUrl', b.mapsUrl, 'url')}
+        <div class="grid2">${fld('Instagram (@ olmadan)', 'brand.instagram', b.instagram)}${fld('Telefon', 'brand.phone', b.phone, 'tel')}</div>
+        <div class="grid3 keep">${fld('Açılış saati', 'brand.open', b.open, 'time')}${fld('Kapanış saati', 'brand.close', b.close, 'time')}${fld('Wi Fi adı', 'brand.wifi', b.wifi)}</div>
+        ${fld('Ödeme yöntemleri (virgülle ayırın)', 'brand.payments', (b.payments || []).join(', '))}
       </div>`;
       return;
     }
@@ -161,19 +161,19 @@
     if (!c) { S.view = 'brand'; return renderPane(); }
     p.innerHTML = `
       <div class="panel">
-        <div class="pane-head"><div><h2>${esc(c.name)}</h2><p class="muted">${c.items.length} бүтээгдэхүүн</p></div>
+        <div class="pane-head"><div><h2>${esc(c.name)}</h2><p class="muted">${c.items.length} ürün</p></div>
           <div class="row-actions">
             <button type="button" class="mini" data-act="catUp">↑</button>
             <button type="button" class="mini" data-act="catDown">↓</button>
-            <button type="button" class="mini danger" data-act="catDel">Ангилал устгах</button>
+            <button type="button" class="mini danger" data-act="catDel">Kategoriyi sil</button>
           </div></div>
-        ${fld('Ангиллын нэр (Турк)', `cat.name`, c.name)}
-        <div class="grid2">${fld('Дэд гарчиг (MN)', 'cat.subtitle.mn', c.subtitle?.mn)}${fld('Дэд гарчиг (TR)', 'cat.subtitle.tr', c.subtitle?.tr)}</div>
-        <div class="checks"><label><input type="checkbox" data-p="cat.hidden" ${c.hidden ? 'checked' : ''}/> Цэснээс нуух</label></div>
+        ${fld('Kategori adı', `cat.name`, c.name)}
+        ${fld('Alt başlık', 'cat.subtitle.tr', c.subtitle?.tr)}
+        <div class="checks"><label><input type="checkbox" data-p="cat.hidden" ${c.hidden ? 'checked' : ''}/> Menüden gizle</label></div>
       </div>
       <div class="panel">
-        <div class="pane-head"><h3>Бүтээгдэхүүн</h3><button type="button" class="mini amber" data-act="addItem">＋ Бүтээгдэхүүн нэмэх</button></div>
-        <div id="items">${c.items.map((it, i) => itemHTML(it, i)).join('') || '<p class="muted">Одоогоор бүтээгдэхүүн алга.</p>'}</div>
+        <div class="pane-head"><h3>Ürünler</h3><button type="button" class="mini amber" data-act="addItem">＋ Ürün ekle</button></div>
+        <div id="items">${c.items.map((it, i) => itemHTML(it, i)).join('') || '<p class="muted">Henüz ürün yok.</p>'}</div>
       </div>`;
   }
 
@@ -188,39 +188,39 @@
         <span class="chev">›</span>
       </div>
       <div class="it-body">
-        ${fld('Нэр (Турк)', 'item.name', it.name)}
-        <div class="grid2">${fld('Тайлбар (MN)', 'item.desc.mn', it.desc?.mn, 'textarea')}${fld('Тайлбар (TR)', 'item.desc.tr', it.desc?.tr, 'textarea')}</div>
+        ${fld('Ürün adı', 'item.name', it.name)}
+        ${fld('Açıklama', 'item.desc.tr', it.desc?.tr, 'textarea')}
         <div class="grid3 keep">
-          ${fld('Үнэ (₺)', 'item.price', it.price, 'number', 'min="0" step="1" inputmode="decimal"')}
-          ${fld('Илчлэг (ккал)', 'item.kcal', it.kcal, 'number', 'min="0" step="1" inputmode="numeric"')}
-          <label class="fld"><span>Тэмдэг</span><select data-p="item.badge">
-            <option value="" ${!it.badge ? 'selected' : ''}>Байхгүй</option>
-            <option value="signature" ${it.badge === 'signature' ? 'selected' : ''}>Онцлох</option>
-            <option value="new" ${it.badge === 'new' ? 'selected' : ''}>Шинэ</option>
+          ${fld('Fiyat (₺)', 'item.price', it.price, 'number', 'min="0" step="1" inputmode="decimal"')}
+          ${fld('Kalori (kcal)', 'item.kcal', it.kcal, 'number', 'min="0" step="1" inputmode="numeric"')}
+          <label class="fld"><span>Rozet</span><select data-p="item.badge">
+            <option value="" ${!it.badge ? 'selected' : ''}>Yok</option>
+            <option value="signature" ${it.badge === 'signature' ? 'selected' : ''}>İmza</option>
+            <option value="new" ${it.badge === 'new' ? 'selected' : ''}>Yeni</option>
           </select></label>
         </div>
-        <span class="fld"><span>Харшил үүсгэгч</span></span>
-        <div class="al-pick">${GK_ALLERGENS.map((a) => `<label><input type="checkbox" data-al="${a.key}" ${als.has(a.key) ? 'checked' : ''}/>${gkAllergenIcon(a.key)}<span>${esc(a.mn)}</span></label>`).join('')}</div>
-        <span class="fld"><span>Зураг (заавал биш)</span></span>
+        <span class="fld"><span>Alerjenler</span></span>
+        <div class="al-pick">${GK_ALLERGENS.map((a) => `<label><input type="checkbox" data-al="${a.key}" ${als.has(a.key) ? 'checked' : ''}/>${gkAllergenIcon(a.key)}<span>${esc(a.tr)}</span></label>`).join('')}</div>
+        <span class="fld"><span>Görsel (isteğe bağlı)</span></span>
         <div class="imgbox dz" data-drop>
-          ${it.image ? `<img src="${esc(it.image)}" alt="" />` : '<div class="ph">Зураг байхгүй<br>Энд чирж оруулж болно</div>'}
+          ${it.image ? `<img src="${esc(it.image)}" alt="" />` : '<div class="ph">Görsel yok<br>Buraya sürükleyip bırakabilirsiniz</div>'}
           <div class="imgact">
-            <label class="mini amber upl">${it.image ? 'Зураг солих' : 'Зураг оруулах'}<input type="file" accept="image/jpeg,image/png,image/webp" data-upload /></label>
-            ${it.image ? '<button type="button" class="mini danger" data-act="rmImg">Зураг устгах</button>' : ''}
-            <input class="fldurl" type="url" placeholder="эсвэл зургийн URL хаяг" data-p="item.image" value="${esc(it.image || '')}" style="background:var(--bg);border:1px solid var(--line2);color:var(--cream);border-radius:10px;padding:8px 10px;font:inherit;font-size:13px" />
-            <span class="hint" style="margin:0">JPG, PNG, WEBP. Автоматаар 1200px болгож шахна.</span>
+            <label class="mini amber upl">${it.image ? 'Görseli değiştir' : 'Görsel yükle'}<input type="file" accept="image/jpeg,image/png,image/webp" data-upload /></label>
+            ${it.image ? '<button type="button" class="mini danger" data-act="rmImg">Görseli sil</button>' : ''}
+            <input class="fldurl" type="url" placeholder="veya görsel URL adresi" data-p="item.image" value="${esc(it.image || '')}" style="background:var(--bg);border:1px solid var(--line2);color:var(--cream);border-radius:10px;padding:8px 10px;font:inherit;font-size:13px" />
+            <span class="hint" style="margin:0">JPG, PNG, WEBP. Otomatik olarak 1200px boyuta küçültülür.</span>
           </div>
         </div>
         <div class="checks">
-          <label><input type="checkbox" data-p="item.soldout" ${it.available === false ? 'checked' : ''}/> Дууссан</label>
-          <label><input type="checkbox" data-p="item.hidden" ${it.hidden ? 'checked' : ''}/> Цэснээс нуух</label>
+          <label><input type="checkbox" data-p="item.soldout" ${it.available === false ? 'checked' : ''}/> Tükendi</label>
+          <label><input type="checkbox" data-p="item.hidden" ${it.hidden ? 'checked' : ''}/> Menüden gizle</label>
         </div>
         <div class="row-actions">
-          <button type="button" class="mini" data-act="up">↑ Дээш</button>
-          <button type="button" class="mini" data-act="down">↓ Доош</button>
-          <button type="button" class="mini" data-act="dup">Хуулбарлах</button>
-          <select class="mini" data-act="move"><option value="">Өөр ангилал руу зөөх…</option>${S.menu.categories.map((c, ci) => ci === S.view ? '' : `<option value="${ci}">${esc(c.name)}</option>`).join('')}</select>
-          <button type="button" class="mini danger" data-act="del">Устгах</button>
+          <button type="button" class="mini" data-act="up">↑ Yukarı</button>
+          <button type="button" class="mini" data-act="down">↓ Aşağı</button>
+          <button type="button" class="mini" data-act="dup">Kopyala</button>
+          <select class="mini" data-act="move"><option value="">Başka kategoriye taşı…</option>${S.menu.categories.map((c, ci) => ci === S.view ? '' : `<option value="${ci}">${esc(c.name)}</option>`).join('')}</select>
+          <button type="button" class="mini danger" data-act="del">Sil</button>
         </div>
       </div>
     </div>`;
@@ -242,7 +242,7 @@
       return setDirty();
     }
     if (el.dataset.upload !== undefined && e.type === 'change') { const x = itemOf(el); return upload(el.files[0], x); }
-    if (el.dataset.act === 'move' && e.type === 'change') { if (el.value === '') return; const x = itemOf(el); const [m] = cat().items.splice(x.i, 1); S.menu.categories[Number(el.value)].items.push(m); setDirty(); renderSide(); renderPane(); return toast('Зөөлөө'); }
+    if (el.dataset.act === 'move' && e.type === 'change') { if (el.value === '') return; const x = itemOf(el); const [m] = cat().items.splice(x.i, 1); S.menu.categories[Number(el.value)].items.push(m); setDirty(); renderSide(); renderPane(); return toast('Taşındı'); }
     const p = el.dataset.p; if (!p) return;
     const val = el.type === 'checkbox' ? el.checked : el.type === 'number' ? (el.value === '' ? 0 : Number(el.value)) : el.value;
     if (p.startsWith('brand.')) {
@@ -272,7 +272,7 @@
     const act = b.dataset.act; const c = cat();
     if (act === 'toggle') { const x = itemOf(b); S.open.has(x.it.id) ? S.open.delete(x.it.id) : S.open.add(x.it.id); x.w.classList.toggle('open'); return; }
     if (act === 'addItem') {
-      const it = { id: uid('i'), name: 'Yeni Ürün', desc: { mn: '', tr: '' }, price: 0, kcal: 0, allergens: [], badge: '', available: true, image: '' };
+      const it = { id: uid('i'), name: 'Yeni Ürün', desc: { tr: '' }, price: 0, kcal: 0, allergens: [], badge: '', available: true, image: '' };
       c.items.unshift(it); S.open.add(it.id); setDirty(); renderSide(); renderPane();
       setTimeout(() => $('#items .it [data-p="item.name"]')?.select(), 50); return;
     }
@@ -281,7 +281,7 @@
       if (j < 0 || j >= arr.length) return; [arr[i], arr[j]] = [arr[j], arr[i]]; S.view = j; setDirty(); renderSide(); return;
     }
     if (act === 'catDel') {
-      if (!confirm(`"${c.name}" ангилал болон доторх ${c.items.length} бүтээгдэхүүнийг устгах уу?`)) return;
+      if (!confirm(`"${c.name}" kategorisi ve içindeki ${c.items.length} ürün silinsin mi?`)) return;
       S.menu.categories.splice(S.view, 1); S.view = 'brand'; setDirty(); renderSide(); renderPane(); return;
     }
     const x = itemOf(b); if (!x) return;
@@ -290,7 +290,7 @@
       [c.items[x.i], c.items[j]] = [c.items[j], c.items[x.i]]; setDirty(); renderPane(); return;
     }
     if (act === 'dup') { const copy = { ...structuredClone(x.it), id: uid('i'), name: x.it.name + ' 2' }; c.items.splice(x.i + 1, 0, copy); S.open.add(copy.id); setDirty(); renderSide(); renderPane(); return; }
-    if (act === 'del') { if (!confirm(`"${x.it.name}" устгах уу?`)) return; c.items.splice(x.i, 1); setDirty(); renderSide(); renderPane(); return; }
+    if (act === 'del') { if (!confirm(`"${x.it.name}" silinsin mi?`)) return; c.items.splice(x.i, 1); setDirty(); renderSide(); renderPane(); return; }
     if (act === 'rmImg') {
       const old = x.it.image; x.it.image = ''; setDirty(); rerenderItem(x.w, x.i);
       if (S.storage === 'blob' && /blob\.vercel-storage\.com\/images\//.test(old)) api('/api/upload?url=' + encodeURIComponent(old), { method: 'DELETE' }).catch(() => {});
@@ -317,14 +317,14 @@
   }
   async function upload(file, x) {
     if (!file || !x) return;
-    if (!/^image\/(jpeg|png|webp)$/.test(file.type)) return toast('Зөвхөн JPG, PNG, WEBP зураг');
-    toast('Зураг боловсруулж байна…');
+    if (!/^image\/(jpeg|png|webp)$/.test(file.type)) return toast('Yalnızca JPG, PNG, WEBP görseller');
+    toast('Görsel işleniyor…');
     try {
       const blob = await compress(file);
       if (S.storage === 'blob') {
         const r = await api('/api/upload', { method: 'POST', headers: { 'content-type': blob.type }, body: blob });
         const d = await r.json().catch(() => ({}));
-        if (!r.ok || !d.ok) throw new Error(d.error || 'Байршуулж чадсангүй');
+        if (!r.ok || !d.ok) throw new Error(d.error || 'Yüklenemedi');
         x.it.image = d.url;
       } else {
         // Fallback: embed as a small data URL (stored only in this browser)
@@ -332,7 +332,7 @@
         x.it.image = await new Promise((r) => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(small); });
       }
       setDirty(); rerenderItem(x.w, x.i);
-      toast(S.storage === 'blob' ? 'Зураг орлоо. Хадгалах товчийг дарна уу.' : 'Зураг энэ хөтөч дээр хадгалагдлаа');
+      toast(S.storage === 'blob' ? 'Görsel eklendi. Kaydet düğmesine basın.' : 'Görsel bu tarayıcıda kaydedildi');
     } catch (err) { toast(err.message); }
   }
 

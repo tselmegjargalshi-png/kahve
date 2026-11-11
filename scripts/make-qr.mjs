@@ -64,8 +64,8 @@ function design1() {
   ${fp}
   <circle cx="${cx}" cy="${cy}" r="${lr + 5}" fill="#f5e8d0"/><circle cx="${cx}" cy="${cy}" r="${lr}" fill="#e8a04a"/>
   <image href="${logo}" xlink:href="${logo}" x="${cx - lr}" y="${cy - lr}" width="${lr * 2}" height="${lr * 2}" clip-path="url(#lc)" preserveAspectRatio="xMidYMid slice"/>
-  <text x="${cx}" y="${oy + Q + 168}" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-style="italic" font-weight="600" font-size="50" fill="#f5e8d0">Цэсээ уншуулаарай</text>
-  <text x="${cx}" y="${oy + Q + 216}" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-weight="600" font-size="24" letter-spacing="3" fill="#e8a04a">MENÜ İÇİN OKUTUN</text>
+  <text x="${cx}" y="${oy + Q + 168}" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-style="italic" font-weight="600" font-size="50" fill="#f5e8d0">Menüyü okutun</text>
+  <text x="${cx}" y="${oy + Q + 216}" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-weight="600" font-size="24" letter-spacing="3" fill="#e8a04a">AFİYET OLSUN</text>
   ${skyline(W, H - 170, '#e8a04a', .12)}
 </svg>`;
 }
@@ -104,7 +104,7 @@ function design2() {
   ${fp}
   <circle cx="${cx}" cy="${cy}" r="${lr}" fill="#fbf1df" stroke="#e8a04a" stroke-width="${s * .5}"/>
   <image href="${logo}" xlink:href="${logo}" x="${cx - lr}" y="${cy - lr}" width="${lr * 2}" height="${lr * 2}" clip-path="url(#lc2)" preserveAspectRatio="xMidYMid slice"/>
-  <text x="${cx}" y="${oy + Q + 92}" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-style="italic" font-weight="600" font-size="46" fill="#2a1006">Уншуулаад, амтаа сонго</text>
+  <text x="${cx}" y="${oy + Q + 92}" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-style="italic" font-weight="600" font-size="46" fill="#2a1006">Okutun, lezzeti seçin</text>
   <text x="${cx}" y="${oy + Q + 138}" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-weight="600" font-size="22" letter-spacing="3" fill="#8a5428">@galatakahve.ist</text>
 </svg>`;
 }

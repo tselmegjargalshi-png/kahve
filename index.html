@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="mn">
+<html lang="tr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Galata Kahve · Цэс</title>
-  <meta name="description" content="Galata Kahve, Истанбулын Галата дахь Турк кофе шоп. Дижитал цэс: Türk Kahvesi, Espresso Bar, Tatlılar." />
+  <title>Galata Kahve · Menü</title>
+  <meta name="description" content="Galata Kahve, İstanbul Galata'da Türk kahvesi dükkânı. Dijital menü: Türk Kahvesi, Espresso Bar, Tatlılar." />
   <meta name="theme-color" content="#1a0805" />
-  <meta property="og:title" content="Galata Kahve · Цэс" />
-  <meta property="og:description" content="Нэг аяга кофены дурсамж дөчин жил үлддэг." />
+  <meta property="og:title" content="Galata Kahve · Menü" />
+  <meta property="og:description" content="Bir fincan kahvenin kırk yıl hatırı vardır." />
   <meta property="og:image" content="/assets/og.jpg" />
   <link rel="icon" href="/assets/favicon.png" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
@@ -27,19 +27,15 @@
         <small>Kahve Dükkanı</small>
       </span>
     </a>
-    <div class="lang" role="group" aria-label="Хэл">
-      <button type="button" data-lang="tr">TR</button>
-      <button type="button" data-lang="mn" class="on">MN</button>
-    </div>
   </header>
 
-  <nav class="catbar" id="catbar" aria-label="Ангилал">
+  <nav class="catbar" id="catbar" aria-label="Kategoriler">
     <div class="cats" id="cats"></div>
     <div class="tools">
-      <button type="button" class="tool" id="btnSearch" aria-label="Хайх">
+      <button type="button" class="tool" id="btnSearch" aria-label="Ara">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
       </button>
-      <button type="button" class="tool" id="btnFilter" aria-label="Шүүлтүүр">
+      <button type="button" class="tool" id="btnFilter" aria-label="Filtre">
         <svg viewBox="0 0 24 24"><path d="M4 5h16l-6.2 7.4V19l-3.6 1.6v-8.2z"/></svg>
         <i class="dot" id="filterDot" hidden></i>
       </button>
@@ -47,7 +43,7 @@
     <div class="searchbar" id="searchbar" hidden>
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
       <input id="q" type="search" autocomplete="off" />
-      <button type="button" id="qClose" aria-label="Хаах">✕</button>
+      <button type="button" id="qClose" aria-label="Kapat">✕</button>
     </div>
   </nav>
 
@@ -57,7 +53,7 @@
         <path d="M0 160V128h40v-14h22v14h30v-22h18v22h28V96l10-8 10 8v32h26v-18h30v18h24V70l6-42 6 42v58h20v-26h34v26h22V84h12l4-30h4l2-20 2 20h4l4 30h12v44h40v-40c0-26 30-44 56-44s56 18 56 44v40h18V40l3-24 3 24v88h14v-30h30v30h40V60l3-22 3 22v68h26v-16h40v16h32v-24h28v24h38V160z"/>
       </svg>
       <div class="hero-in">
-        <img class="emblem" src="/assets/emblem.webp" alt="Galata Kahve лого" width="540" height="386" />
+        <img class="emblem" src="/assets/emblem.webp" alt="Galata Kahve logosu" width="540" height="386" />
         <p class="eyebrow" data-i="since"></p>
         <h1 class="tagline" data-b="tagline"></h1>
         <div class="status" id="status"><i></i><span></span></div>
@@ -90,7 +86,6 @@
       <span class="star" aria-hidden="true">✦</span>
       <blockquote>
         <p class="tr-quote" data-b="proverb.tr"></p>
-        <p class="mn-quote" data-b="proverb.mn"></p>
       </blockquote>
       <p class="story" data-b="story"></p>
     </section>

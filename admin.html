@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="mn">
+<html lang="tr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Galata Kahve · Удирдлага</title>
+  <title>Galata Kahve · Yönetim</title>
   <meta name="theme-color" content="#1a0805" />
   <link rel="icon" href="/assets/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -18,29 +18,29 @@
   <section class="login" id="login">
     <form class="login-card" id="loginForm">
       <img src="/assets/emblem.webp" alt="Galata Kahve" width="220" height="157" />
-      <h1>Удирдлагын самбар</h1>
-      <p class="muted">Цэс, үнэ, илчлэг, харшил болон зургийг эндээс засна.</p>
-      <label class="fld"><span>Нууц үг</span><input type="password" id="pw" autocomplete="current-password" required /></label>
-      <button class="btn-amber" type="submit" id="loginBtn">Нэвтрэх</button>
+      <h1>Yönetim Paneli</h1>
+      <p class="muted">Menü, fiyat, kalori, alerjen ve görselleri buradan düzenleyin.</p>
+      <label class="fld"><span>Şifre</span><input type="password" id="pw" autocomplete="current-password" required /></label>
+      <button class="btn-amber" type="submit" id="loginBtn">Giriş yap</button>
       <p class="err" id="loginErr" hidden></p>
-      <a class="back" href="/">← Цэс рүү буцах</a>
+      <a class="back" href="/">← Menüye dön</a>
     </form>
   </section>
 
   <!-- App -->
   <div class="app" id="app" hidden>
     <header class="abar">
-      <div class="brand"><img src="/assets/icon-512.png" alt="" width="36" height="36" /><span class="brand-text"><b>Galata Kahve</b><small>Удирдлага</small></span></div>
+      <div class="brand"><img src="/assets/icon-512.png" alt="" width="36" height="36" /><span class="brand-text"><b>Galata Kahve</b><small>Yönetim</small></span></div>
       <div class="abar-actions">
-        <span class="savestate" id="saveState">Хадгалсан</span>
-        <a class="btn-ghost sm" href="/" target="_blank" rel="noopener">Цэс харах</a>
-        <button class="btn-amber sm" id="saveBtn" type="button">Хадгалах</button>
-        <button class="icon-btn" id="moreBtn" type="button" aria-label="Нэмэлт">⋯</button>
+        <span class="savestate" id="saveState">Kaydedildi</span>
+        <a class="btn-ghost sm" href="/" target="_blank" rel="noopener">Menüyü gör</a>
+        <button class="btn-amber sm" id="saveBtn" type="button">Kaydet</button>
+        <button class="icon-btn" id="moreBtn" type="button" aria-label="Daha fazla">⋯</button>
         <div class="menu-pop" id="morePop" hidden>
-          <button type="button" id="exportBtn">JSON татаж авах</button>
-          <label>JSON оруулах<input type="file" id="importFile" accept="application/json" hidden /></label>
-          <button type="button" id="resetBtn">Анхны цэс рүү сэргээх</button>
-          <button type="button" id="logoutBtn">Гарах</button>
+          <button type="button" id="exportBtn">JSON indir</button>
+          <label>JSON yükle<input type="file" id="importFile" accept="application/json" hidden /></label>
+          <button type="button" id="resetBtn">İlk menüye sıfırla</button>
+          <button type="button" id="logoutBtn">Çıkış</button>
         </div>
       </div>
     </header>
@@ -48,10 +48,10 @@
 
     <div class="layout">
       <aside class="side">
-        <button type="button" class="side-item" data-view="brand"><span>⚙</span> Ерөнхий мэдээлэл</button>
-        <h4>Ангилал</h4>
+        <button type="button" class="side-item" data-view="brand"><span>⚙</span> Genel bilgiler</button>
+        <h4>Kategoriler</h4>
         <div id="catList"></div>
-        <button type="button" class="add-cat" id="addCat">＋ Ангилал нэмэх</button>
+        <button type="button" class="add-cat" id="addCat">＋ Kategori ekle</button>
       </aside>
       <main class="pane" id="pane"></main>
     </div>
